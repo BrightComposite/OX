@@ -2,60 +2,106 @@ package composite.ox.game.grid;
 
 import composite.ox.game.GameController;
 
+import java.util.ArrayList;
+
 public class GameGrid {
+    private GameController ctrl;
     private int[][] cells;
-    private int[][] winCombination = null;
-    private int cellsCount;
+    private int size;
+    private int cellsToWin;
+
     private int cellsToggled = 0;
+    private ArrayList<Coords> winCombination = null;
 
-    public GameGrid(int rows, int cols) {
-        cells = new int[rows][cols];
-        cellsCount = rows * cols;
+    public GameGrid(GameController ctrl, int size, int cellsToWin) {
+        this.ctrl = ctrl;
+        this.cells = new int[size][size];
+        this.size = size;
+        this.cellsToWin = cellsToWin;
 
-        for (int x = 0; x < rows; x++) {
-            for (int y = 0; y < cols; y++) {
-                cells[x][y] = 2;
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                this.cells[x][y] = 2;
             }
         }
     }
 
-    public boolean toggleCell(int x, int y) {
-        if(cells[x][y] != 2 || cells.length <= y || cells[0].length <= x)
+    public GameGrid(GameController ctrl, int size) {
+        this(ctrl, size, size);
+    }
+
+    public int getCell(Coords coords) {
+        return includes(coords) ? this.cells[coords.getX()][coords.getY()] : -1;
+    }
+
+    public boolean toggleCell(Coords coords) {
+        if(getCell(coords) != 2)
             return false;
 
-        cells[x][y] = GameController.getCurrentPlayer();
-        ++cellsToggled;
+        setCell(coords, ctrl.getCurrentPlayer());
+        ++this.cellsToggled;
 
-        lookForWin(x, y);
+        lookForWin(coords);
         return true;
     }
 
-    protected void makeMove() {
-
+    public boolean includes(Coords coords) {
+        return coords.getX() >= 0 && coords.getY() >= 0 && coords.getX() < size && coords.getY() < size;
     }
 
-    public int[][] getWinCombination() {
-        return winCombination;
+    public ArrayList<Coords> getWinCombination() {
+        return this.winCombination;
     }
 
-    protected boolean checkWin() {
-        return winCombination != null;
+    public boolean checkWin() {
+        return this.winCombination != null;
     }
 
-    protected boolean checkGridFull() {
-        return cellsToggled == cellsCount;
+    public boolean isClosed() {
+        return this.winCombination != null || this.cellsToggled == this.size * this.size;
     }
 
     /*------------------------------------------------------------------------------------------------------------*/
 
-    private void lookForWin(int x, int y)
+    private void setCell(Coords coords, int value) {
+        if(includes(coords))
+            this.cells[coords.getX()][coords.getY()] = value;
+    }
+
+    /**
+     * Checks all directions from given coordinates to find win combination
+     */
+    private void lookForWin(Coords coords)
     {
-        boolean foundWin = false;
+        ArrayList<Coords> cells = new ArrayList<>();
 
-        while(!foundWin)
-        {
+        for(Direction[] dirs : Direction.getPairs()) {
+            for(int i = 0; i < 2; ++i) {
+                if(collectCellsInDirection(cells, dirs[i], coords)) {
+                    this.winCombination = cells; // we found the win combination!
+                    return;
+                }
+            }
 
-            foundWin = true;
+            cells.clear(); // erase all cells collected in this step
+        }
+    }
+
+    /**
+     * Moves coordinates in a given direction and adds cells to an array until a cell corresponds to a current player
+     */
+    private boolean collectCellsInDirection(ArrayList<Coords> cells, Direction dir, Coords coords)
+    {
+        while(true) {
+            coords = coords.add(dir);
+
+            if(getCell(coords) != ctrl.getCurrentPlayer()) // check the bounds and the cell state
+                return false;
+
+            cells.add(coords);
+
+            if(cells.size() == this.cellsToWin)
+                return true; // we found the win combination, so there is no need to continue
         }
     }
 }
