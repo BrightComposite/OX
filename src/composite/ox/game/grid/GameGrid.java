@@ -73,17 +73,17 @@ public class GameGrid {
      */
     private void lookForWin(Coords coords)
     {
-        ArrayList<Coords> cells = new ArrayList<>();
+        ArrayList<Coords> cellsList = new ArrayList<>();
 
         for(Direction[] dirs : Direction.getPairs()) {
             for(int i = 0; i < 2; ++i) {
                 if(collectCellsInDirection(cells, dirs[i], coords)) {
-                    this.winCombination = cells; // we found the win combination!
+                    this.winCombination = cellsList; // we found the win combination!
                     return;
                 }
             }
 
-            cells.clear(); // erase all cells collected in this step
+            cellsList.clear(); // erase all cells collected in this step
         }
     }
 
