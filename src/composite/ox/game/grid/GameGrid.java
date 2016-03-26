@@ -77,7 +77,7 @@ public class GameGrid {
 
         for(Direction[] dirs : Direction.getPairs()) {
             for(int i = 0; i < 2; ++i) {
-                if(collectCellsInDirection(cells, dirs[i], coords)) {
+                if(collectCellsInDirection(cellsList, dirs[i], coords)) {
                     this.winCombination = cellsList; // we found the win combination!
                     return;
                 }
