@@ -10,16 +10,15 @@ public class OxGameForm extends JFrame {
     public OxGameForm() {}
 
     public void setup() {
-        selectPage(OxMainMenu.class);
-
-        setLayout(new BorderLayout());
-        setBackground(Color.black);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setSize(500, 400);
         setResizable(false);
-        setVisible(true);
+        setLayout(new BorderLayout());
+        setBackground(Color.black);
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        selectPage(OxMainMenu.class);
+        setVisible(true);
     }
 
     private void selectPage(Class<? extends JPanel> pageClass) {
