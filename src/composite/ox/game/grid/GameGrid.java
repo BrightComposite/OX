@@ -19,9 +19,9 @@ public class GameGrid {
         this.size = size;
         this.cellsToWin = cellsToWin;
 
-        for (int x = 0; x < size; x++) {
-            for (int y = 0; y < size; y++) {
-                this.cells[x][y] = 2;
+        for (int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+                this.cells[y][x] = 2;
             }
         }
     }
@@ -31,7 +31,15 @@ public class GameGrid {
     }
 
     public int getCell(Coords coords) {
-        return includes(coords) ? this.cells[coords.getX()][coords.getY()] : -1;
+        return includes(coords) ? this.cells[coords.getY()][coords.getX()] : -1;
+    }
+
+    public int getCellsCount() {
+        return size * size;
+    }
+
+    public int getRank() {
+        return size;
     }
 
     public boolean toggleCell(Coords coords) {
@@ -65,7 +73,7 @@ public class GameGrid {
 
     private void setCell(Coords coords, int value) {
         if(includes(coords))
-            this.cells[coords.getX()][coords.getY()] = value;
+            this.cells[coords.getY()][coords.getX()] = value;
     }
 
     /**

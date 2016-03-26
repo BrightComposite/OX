@@ -5,7 +5,7 @@ import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 
 public class OxGameForm extends JFrame {
-    private JPanel currentPage = null;
+    private OxPage currentPage = null;
 
     public OxGameForm() {}
 
@@ -21,14 +21,14 @@ public class OxGameForm extends JFrame {
         setVisible(true);
     }
 
-    private void selectPage(Class<? extends JPanel> pageClass) {
+    void selectPage(Class<? extends OxPage> pageClass) {
         if(pageClass.isInstance(currentPage))
             return;
 
-        JPanel page;
+        OxPage page;
 
         try {
-            page = pageClass.getDeclaredConstructor().newInstance();
+            page = pageClass.getDeclaredConstructor(OxGameForm.class).newInstance(this);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
             return;
@@ -36,5 +36,7 @@ public class OxGameForm extends JFrame {
 
         this.currentPage = page;
         setContentPane(this.currentPage);
+        validate();
+        repaint();
     }
 }

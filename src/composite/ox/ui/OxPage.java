@@ -3,14 +3,14 @@ package composite.ox.ui;
 import javax.swing.*;
 import java.awt.*;
 
-class OxButton extends JButton {
-    OxButton() {
-        setBorderPainted(false);
-        setContentAreaFilled(false);
-        setFocusPainted(false);
+class OxPage extends JPanel {
+    final OxGameForm form;
+
+    OxPage(OxGameForm form) {
+        this.form = form;
+
         setOpaque(false);
-        setFocusable(false);
-        setAlignmentX(CENTER_ALIGNMENT);
+        setBackground(new Color(255, 255, 255));
     }
 
     @Override
@@ -23,7 +23,9 @@ class OxButton extends JButton {
         int w = getWidth();
         int h = getHeight();
 
-        g.setColor(Color.RED);
+        g.setColor(getBackground());
+        g.fillRect(0, 0, w - 1, h - 1);
+        g.setColor(Color.BLUE);
         g.drawRect(0, 0, w - 1, h - 1);
 
         g.dispose();
