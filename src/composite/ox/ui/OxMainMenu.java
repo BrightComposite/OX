@@ -13,6 +13,7 @@ class OxMainMenu extends JPanel {
     OxMainMenu() {
         setOpaque(false);
         setBackground(new Color(255, 255, 255));
+        setLayout(new GridBagLayout());
 
         playTwoButton = new OxButton();
         playTwoButton.setText("Два игрока");
@@ -26,8 +27,8 @@ class OxMainMenu extends JPanel {
         container.add(Box.createVerticalStrut(5));
         container.add(exitButton);
 
-        container.setAlignmentX(Component.CENTER_ALIGNMENT);
-        container.setAlignmentY(Component.CENTER_ALIGNMENT);
+       // container.setAlignmentX(Component.CENTER_ALIGNMENT);
+    //    container.setAlignmentY(Component.CENTER_ALIGNMENT);
 
         add(container);
 
