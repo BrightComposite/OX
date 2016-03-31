@@ -2,9 +2,7 @@ package composite.ox.ui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 class OxMainMenu extends OxPage {
     private JButton playTwoButton;
@@ -31,22 +29,16 @@ class OxMainMenu extends OxPage {
 
         setVisible(true);
 
-        playTwoButton.addMouseListener(new MouseAdapter() {
+        playTwoButton.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                if(e.getButton() != MouseEvent.BUTTON1)
-                    return;
-
+            public void actionPerformed(ActionEvent e) {
                 OxMainMenu.this.form.selectPage(OxGamePage.class);
             }
         });
 
-        exitButton.addMouseListener(new MouseAdapter() {
+        exitButton.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                if(e.getButton() != MouseEvent.BUTTON1)
-                    return;
-
+            public void actionPerformed(ActionEvent e) {
                 OxMainMenu.this.form.dispatchEvent(new WindowEvent(OxMainMenu.this.form, WindowEvent.WINDOW_CLOSING));
             }
         });

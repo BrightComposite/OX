@@ -18,12 +18,6 @@ public class GameGrid {
         this.cells = new int[size][size];
         this.size = size;
         this.cellsToWin = cellsToWin;
-
-        for (int y = 0; y < size; y++) {
-            for (int x = 0; x < size; x++) {
-                this.cells[y][x] = 2;
-            }
-        }
     }
 
     public GameGrid(GameController ctrl, int size) {
@@ -49,8 +43,22 @@ public class GameGrid {
         setCell(coords, ctrl.getCurrentPlayer());
         ++this.cellsToggled;
 
+        if(this.cellsToggled <= this.cellsToWin)
+            return true;
+
         lookForWin(coords);
         return true;
+    }
+
+    public void clear() {
+        this.cellsToggled = 0;
+        this.winCombination = null;
+
+        for (int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+                this.cells[y][x] = 2;
+            }
+        }
     }
 
     public boolean includes(Coords coords) {
@@ -84,6 +92,8 @@ public class GameGrid {
         ArrayList<Coords> cellsList = new ArrayList<>();
 
         for(Direction[] dirs : Direction.getPairs()) {
+            cellsList.add(coords);
+
             for(int i = 0; i < 2; ++i) {
                 if(collectCellsInDirection(cellsList, dirs[i], coords)) {
                     this.winCombination = cellsList; // we found the win combination!

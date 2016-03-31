@@ -1,23 +1,25 @@
 package composite.ox.game.grid;
 
 public class Coords {
-    private int [] coords;
+    private int x;
+    private int y;
 
-    Coords(int x, int y) {
-        this.coords[0] = x;
-        this.coords[1] = y;
+    public Coords(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
-    Coords(int [] coords) {
-        this.coords = coords.clone();
+    public Coords(int [] coords) {
+        this.x = coords[0];
+        this.y = coords[1];
     }
 
     public int getX() {
-        return this.coords[0];
+        return this.x;
     }
 
     public int getY() {
-        return this.coords[1];
+        return this.y;
     }
 
     public int getZ() {
@@ -25,10 +27,10 @@ public class Coords {
     }
 
     public Coords add(int ... offset) {
-        return new Coords(this.coords[0] + offset[0], this.coords[1] + offset[1]);
+        return new Coords(this.x + offset[0], this.y + offset[1]);
     }
 
     public Coords add(Direction dir) {
-        return new Coords(dir.applyOffsetTo(this.coords));
+        return new Coords(dir.applyOffsetTo(this.x, this.y));
     }
 }

@@ -11,7 +11,8 @@ public class GameController {
     private GameGrid grid = null;
     private ArrayList<GameEventListener> listeners = new ArrayList<>();
 
-    public GameController() {}
+    public GameController() {
+        grid = new GameGrid(this, 3);}
 
     public int getCurrentPlayer() {
         return currentPlayer;
@@ -55,10 +56,10 @@ public class GameController {
         listeners.add(l);
     }
 
-    public void start() {
+    public void startGame() {
+        grid.clear();
         state = GameState.IN_PROGRESS;
 
-        grid = new GameGrid(this, 3);
         currentPlayer = 0;
 
         for(GameEventListener l : listeners)

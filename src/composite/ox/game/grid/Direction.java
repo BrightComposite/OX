@@ -11,14 +11,14 @@ enum Direction {
     NORTH_WEST;
 
     private static int[][] offsets = {
-            { 0,  1},
-            { 1,  1},
-            { 1,  0},
-            { 1, -1},
             { 0, -1},
-            {-1, -1},
+            { 1, -1},
+            { 1,  0},
+            { 1,  1},
+            { 0,  1},
+            {-1,  1},
             {-1,  0},
-            {-1,  1}
+            {-1, -1}
     };
 
     private static Direction[][] pairs = {
