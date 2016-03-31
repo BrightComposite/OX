@@ -8,11 +8,13 @@ import composite.ox.game.grid.GameGrid;
 public class GameController {
     private int currentPlayer = 0;
     private GameState state = GameState.NOT_STARTED;
-    private GameGrid grid = null;
-    private ArrayList<GameEventListener> listeners = new ArrayList<>();
+
+    private final GameGrid grid;
+    private final ArrayList<GameEventListener> listeners = new ArrayList<>();
 
     public GameController() {
-        grid = new GameGrid(this, 3);}
+        grid = new GameGrid(this, 3);
+    }
 
     public int getCurrentPlayer() {
         return currentPlayer;

@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import composite.ox.game.GameController;
@@ -14,11 +12,11 @@ import composite.ox.game.grid.Coords;
 import composite.ox.game.grid.GameGrid;
 
 class OxGamePage extends OxPage implements GameEventListener {
-    private JButton [][] cells;
-    private JComponent gameButtons;
-    private JButton mainMenuButton;
-    private JButton restartButton;
-    final private GameController controller;
+    private final JButton [][] cells;
+    private final JComponent gameButtons;
+    private final JButton mainMenuButton;
+    private final JButton restartButton;
+    private final GameController controller;
 
     OxGamePage(final OxGameForm form) {
         super(form);

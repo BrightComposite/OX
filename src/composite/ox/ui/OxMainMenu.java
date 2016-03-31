@@ -5,8 +5,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 class OxMainMenu extends OxPage {
-    private JButton playTwoButton;
-    private JButton exitButton;
+    private final JButton playTwoButton;
+    private final JButton exitButton;
 
     OxMainMenu(final OxGameForm form) {
         super(form);

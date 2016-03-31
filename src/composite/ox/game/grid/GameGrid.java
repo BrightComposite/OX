@@ -5,10 +5,10 @@ import composite.ox.game.GameController;
 import java.util.ArrayList;
 
 public class GameGrid {
-    private GameController ctrl;
-    private int[][] cells;
-    private int size;
-    private int cellsToWin;
+    private final GameController ctrl;
+    private final int[][] cells;
+    private final int size;
+    private final int cellsToWin;
 
     private int cellsToggled = 0;
     private ArrayList<Coords> winCombination = null;

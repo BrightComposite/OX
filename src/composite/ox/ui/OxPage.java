@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 class OxPage extends JPanel {
-    final OxGameForm form;
+    protected final OxGameForm form;
 
     OxPage(OxGameForm form) {
         this.form = form;
