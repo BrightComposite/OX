@@ -2,8 +2,7 @@ package composite.ox.game;
 
 import java.util.ArrayList;
 
-import composite.ox.game.grid.Coords;
-import composite.ox.game.grid.GameGrid;
+import composite.ox.grid.Coords;
 
 public class GameController {
     private int currentPlayer = 0;

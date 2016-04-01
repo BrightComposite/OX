@@ -1,6 +1,6 @@
-package composite.ox.game.grid;
+package composite.ox.grid;
 
-enum Direction {
+public enum Direction {
     NORTH,
     NORTH_EAST,
     EAST,

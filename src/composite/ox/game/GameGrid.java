@@ -1,42 +1,34 @@
-package composite.ox.game.grid;
+package composite.ox.game;
 
-import composite.ox.game.GameController;
+import composite.ox.grid.Coords;
+import composite.ox.grid.Direction;
+import composite.ox.grid.Grid;
 
 import java.util.ArrayList;
 
 public class GameGrid {
     private final GameController ctrl;
-    private final int[][] cells;
-    private final int size;
+    private final Grid<Integer> cells;
     private final int cellsToWin;
 
     private int cellsToggled = 0;
     private ArrayList<Coords> winCombination = null;
 
-    public GameGrid(GameController ctrl, int size, int cellsToWin) {
+    GameGrid(GameController ctrl, int size, int cellsToWin) {
         this.ctrl = ctrl;
-        this.cells = new int[size][size];
-        this.size = size;
+        this.cells = new Grid<>(size);
         this.cellsToWin = cellsToWin;
     }
 
-    public GameGrid(GameController ctrl, int size) {
+    GameGrid(GameController ctrl, int size) {
         this(ctrl, size, size);
     }
 
-    public int getCell(Coords coords) {
-        return includes(coords) ? this.cells[coords.getY()][coords.getX()] : -1;
-    }
-
-    public int getCellsCount() {
-        return size * size;
-    }
-
     public int getRank() {
-        return size;
+        return cells.getRank();
     }
 
-    public boolean toggleCell(Coords coords) {
+    boolean toggleCell(Coords coords) {
         if(getCell(coords) != 2)
             return false;
 
@@ -50,38 +42,34 @@ public class GameGrid {
         return true;
     }
 
-    public void clear() {
+    void clear() {
         this.cellsToggled = 0;
         this.winCombination = null;
 
-        for (int y = 0; y < size; y++) {
-            for (int x = 0; x < size; x++) {
-                this.cells[y][x] = 2;
-            }
-        }
+        this.cells.fill(2);
     }
 
-    public boolean includes(Coords coords) {
-        return coords.getX() >= 0 && coords.getY() >= 0 && coords.getX() < size && coords.getY() < size;
-    }
-
-    public ArrayList<Coords> getWinCombination() {
+    ArrayList<Coords> getWinCombination() {
         return this.winCombination;
     }
 
-    public boolean checkWin() {
+    boolean checkWin() {
         return this.winCombination != null;
     }
 
-    public boolean isClosed() {
-        return this.winCombination != null || this.cellsToggled == this.size * this.size;
+    boolean isClosed() {
+        return this.winCombination != null || this.cellsToggled == this.cells.getRank() * this.cells.getRank();
     }
 
     /*------------------------------------------------------------------------------------------------------------*/
 
+    private int getCell(Coords coords) {
+        return this.cells.includes(coords) ? this.cells.get(coords) : -1;
+    }
+
     private void setCell(Coords coords, int value) {
-        if(includes(coords))
-            this.cells[coords.getY()][coords.getX()] = value;
+        if(this.cells.includes(coords))
+            this.cells.set(value, coords);
     }
 
     /**

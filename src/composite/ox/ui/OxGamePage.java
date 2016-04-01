@@ -1,18 +1,19 @@
 package composite.ox.ui;
 
+import composite.ox.game.GameController;
+import composite.ox.game.GameEventListener;
+import composite.ox.grid.Coords;
+import composite.ox.game.GameGrid;
+import composite.ox.grid.Grid;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import composite.ox.game.GameController;
-import composite.ox.game.GameEventListener;
-import composite.ox.game.grid.Coords;
-import composite.ox.game.grid.GameGrid;
-
 class OxGamePage extends OxPage implements GameEventListener {
-    private final JButton [][] cells;
+    private final Grid<OxCellButton> cells;
     private final JComponent gameButtons;
     private final JButton mainMenuButton;
     private final JButton restartButton;
@@ -60,7 +61,6 @@ class OxGamePage extends OxPage implements GameEventListener {
                 controller.startGame();
             }
         });
-
         mainMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -69,16 +69,20 @@ class OxGamePage extends OxPage implements GameEventListener {
         });
 
         GameGrid grid = controller.getGrid();
-        cells = new OxCellButton[grid.getRank()][grid.getRank()];
+
+        int rank = grid.getRank();
+        cells = new Grid<>(rank);
 
         OxContainer gridPanel = new OxContainer();
-        gridPanel.setLayout(new GridLayout(grid.getRank(), grid.getRank(), 5, 5));
+        gridPanel.setLayout(new GridLayout(rank, rank, 5, 5));
         centerPanel.add(gridPanel);
 
-        for(int y = 0; y < grid.getRank(); ++y) {
-            for(int x = 0; x < grid.getRank(); ++x) {
-                cells[y][x] = new OxCellButton(new Coords(x, y), controller);
-                gridPanel.add(cells[y][x]);
+        for (int y = 0; y < rank; ++y) {
+            for (int x = 0; x < rank; ++x) {
+                Coords coords = new Coords(x, y);
+                OxCellButton cell = new OxCellButton(coords, controller);
+                cells.set(cell, coords);
+                gridPanel.add(cell);
             }
         }
 
@@ -94,9 +98,9 @@ class OxGamePage extends OxPage implements GameEventListener {
 
         GameGrid grid = controller.getGrid();
 
-        for(int y = 0; y < grid.getRank(); ++y) {
-            for(int x = 0; x < grid.getRank(); ++x) {
-                cells[y][x].setText("");
+        for (int y = 0; y < grid.getRank(); ++y) {
+            for (int x = 0; x < grid.getRank(); ++x) {
+                cells.get(x, y).setState(2);
             }
         }
     }
@@ -108,7 +112,7 @@ class OxGamePage extends OxPage implements GameEventListener {
 
     @Override
     public void moveMade(GameController controller, Coords coords) {
-        cells[coords.getY()][coords.getX()].setText(controller.getCurrentPlayer() == 0 ? "X" : "O");
+        cells.get(coords).setState(controller.getCurrentPlayer());
     }
 
     @Override

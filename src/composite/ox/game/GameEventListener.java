@@ -1,6 +1,6 @@
 package composite.ox.game;
 
-import composite.ox.game.grid.Coords;
+import composite.ox.grid.Coords;
 
 import java.util.ArrayList;
 

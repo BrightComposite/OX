@@ -1,4 +1,4 @@
-package composite.ox.game.grid;
+package composite.ox.grid;
 
 public class Coords {
     private final int x;
@@ -9,9 +9,9 @@ public class Coords {
         this.y = y;
     }
 
-    public Coords(int [] coords) {
+    public Coords(int ... coords) {
         this.x = coords[0];
-        this.y = coords[1];
+        this.y = coords.length > 1 ? coords[1] : 0;
     }
 
     public int getX() {
@@ -27,7 +27,7 @@ public class Coords {
     }
 
     public Coords add(int ... offset) {
-        return new Coords(this.x + offset[0], this.y + offset[1]);
+        return new Coords(this.x + offset[0], this.y + (offset.length > 1 ? offset[1] : 0));
     }
 
     public Coords add(Direction dir) {
